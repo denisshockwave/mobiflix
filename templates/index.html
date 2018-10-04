@@ -1,0 +1,85 @@
+
+
+{% include 'nav.html' %}
+<!-- <div class="container-fluid">
+  <div class="row"
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img class="d-block w-100" src="https://unsplash.it/1200/600?image=543" alt="First slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="https://unsplash.it/1200/600?image=542" alt="Second slide">
+    </div>
+    <div class="carousel-item">
+      <img class="d-block w-100" src="https://unsplash.it/1200/600?image=541" alt="Third slide">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+</div>
+</div> -->
+
+
+<div class="container search">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <form action="" method="POST">
+        {% csrf_token %}
+      	<div class="form-group">
+      		<div class="row">
+      			<div class="col-md-10">
+      		<input type="text" class="form-control" id="search" name="query" placeholder="Search our Directory">
+      			</div>
+      			<div class="col-md-2">
+      				<input type="submit" name="search" value="Search Movie" id="search" class="btn btn-info">
+      			</div>
+      			</div>
+      	</div>
+      </form>
+    </div>
+</div>
+
+
+<div class="container">
+    <table class="infinite-container table table-responsive table-striped offset-md-2"  style="background-color:#fff">
+
+
+ {% for article in articles %}
+        <tr class="infinite-item">
+          <td style="width:300px;">
+            <img style="width:200px;" src="{% if article.poster %} {{article.poster.url}} {% else %} /static/body.jpg {%endif %}" class="panel-image-preview" />
+
+          </td>
+          <td><a href="/mobflix/watch/{{article.id}}">{{article.name}}</a><br>{{article.description}}</td>
+          <td>{{article.time}}   </td>
+        </tr>
+
+
+   {% endfor %}
+
+   </table>
+</div>
+
+   <div class="loading" style="color:white;" style="display: none;">
+     Loading...
+   </div>
+
+   {% if articles.has_next %}
+     <a style="color:#fff" class="infinite-more-link" href="?page={{ articles.next_page_number }}">More</a>
+   {% endif %}
+
+
+{% include 'footer.html' %}

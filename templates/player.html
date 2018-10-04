@@ -1,0 +1,232 @@
+
+<!doctype html>
+<html lang="en" style="    background: linear-gradient(to left top,#4dc1ff,#0074b3) !importa;
+    background-attachment: fixed;">
+
+<head>
+    <meta charset="utf-8" />
+    <title>VIDEO</title>
+    <meta name="description" property="og:description" content="A simple HTML5 media player with custom controls and WebVTT captions.">
+    <meta name="author" content="mobiflix">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.4.3/demo.css?v=2">
+
+    <!-- Docs styles -->
+
+    <!-- Preload -->
+    <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/gordita-medium.woff2">
+    <link rel="preload" as="font" crossorigin type="font/woff2" href="https://cdn.plyr.io/static/fonts/gordita-bold.woff2">
+</head>
+
+<body>
+    <div class="grid" style="">
+        <header>
+            <h1>{{video.name}}</h1>
+            <p>{{video.description}}       <a href="{% url 'index' %}"><i class="fa fa-home"></i> <- Home</a></p>
+            <p> {%if state %}
+
+                <div class="alert alert-{{state}}">
+                  {{message}}
+                </div>
+                {% endif %}
+
+
+
+             </p>
+
+
+            <div class="call-to-action">
+                    <span class="button--with-count">
+                        <a href="https://netpap.co.ke/mobflix/kejani/rafikihost/"  class="button" >
+                            <svg class="icon" role="presentation">
+                                <title>Mobflix</title>
+
+                            </svg>
+                            Get Watch code
+                         </a><!--<span class="button__count"></span> -->
+                    </span>
+                    <a class="button__count" id="openCollapseArea" href="#" >
+                      Input code
+                      </a>
+                </div>
+
+                <div class="collapse" id="collapseArea" style="display:none;">
+                    <div class="card card-body">
+                      <form action="" method="post">
+                        {% csrf_token %}
+                        <label>Enter code</label>
+                        <br>
+                          <input type="text" name="code" placeholder="Enter code">
+
+                          <input type="submit" name="submit_code" value="Confirm code">
+                      </form>
+                      </div>
+                </div>
+        </header>
+
+        <main>
+            <div id="container">
+                <video controls crossorigin playsinline poster="{{video.poster.url}}" id="player">
+                    <!-- Video files -->
+                    {% if status == "WATCH" %}
+                    <source src="{{video.video_url.url}}" type="video/mp4" size="576">
+                    <source src="{{video.video_url.url}}" type="video/mp4" size="720">
+                    <source src="{{video.video_url.url}}" type="video/mp4" size="1080">
+                    {% endif %}
+                    <!-- Caption files -->
+                    <!-- <track kind="captions" label="English" srclang="en" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.en.vtt"
+                        default>
+                    <track kind="captions" label="Français" srclang="fr" src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.fr.vtt"> -->
+
+                    <!-- Fallback for browsers that don't support the <video> element -->
+
+                </video>
+            </div>
+
+
+        </main>
+    </div>
+
+    <aside>
+
+        <p>Surf the internet?,
+            <a href="http://192.168.0.1"
+                target="_blank" data-shr-network="twitter">Go online</a> 👍
+        </p>
+    </aside>
+
+    <script src="/static/js/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+
+
+    <!-- Polyfills -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=es6,Array.prototype.includes,CustomEvent,Object.entries,Object.values,URL"
+        crossorigin="anonymous"></script>
+
+
+    <!-- Plyr core script -->
+    <script src="https://cdn.plyr.io/3.4.3/plyr.js" crossorigin="anonymous"></script>
+
+    <!-- Sharing libary (https://shr.one) -->
+    <script src="https://cdn.shr.one/1.0.1/shr.js" crossorigin="anonymous"></script>
+
+    <!-- Rangetouch to fix <input type="range"> on touch devices (see https://rangetouch.com) -->
+    <script src="https://cdn.rangetouch.com/1.0.1/rangetouch.js" async crossorigin="anonymous"></script>
+
+    <!-- Docs script -->
+    <script src="https://cdn.plyr.io/3.4.3/demo.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+<script type="text/javascript">
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function checkCookie(val) {
+    var user = getCookie("username");
+    if (user != "") {
+        alert("Welcome again " + user);
+    } else {
+        user = prompt("Please enter your name:", "");
+        if (user != "" && user != null) {
+            setCookie("username", user, 365);
+        }
+    }
+}
+$("#openCollapseArea").click(function(){
+
+  $("#collapseArea").toggle("slow","linear");
+});
+var currentSpeed=1.0;
+var video = document.getElementById('video');
+
+// Playback from the point on the Seekbar where the user clicks
+	function setPlayPosition(x) {
+		var seekBar = document.getElementById("seekBar");
+		var value = (x - findPos(seekBar)).toFixed(2);
+		var timeToSet =
+            ((video.duration / seekBar.offsetWidth).toFixed(2) * value).toFixed(2);
+				video.currentTime = timeToSet;
+			}
+
+      // Determine the real position of the object
+    		function findPos(obj) {
+    		var curleft = 0;
+    		if (obj.offsetParent) {
+    			do { curleft += obj.offsetLeft; } while (obj = obj.offsetParent);
+    				}
+    		return curleft;
+    			}
+
+    // Event Listner for Mouse Events on the SeekBar
+    var seekBar = document.getElementById("seekBar").addEventListener
+    ("mouseup", function(e) { setPlayPosition(e.pageX); }, false);
+
+    video.addEventListener('timeupdate', seekBar, false);
+
+var intervalRewind;
+$(video).on('play',function(){
+    video.playbackRate = 1.0;
+    clearInterval(intervalRewind);
+    setCookie("currentSpeed", 1.0, 365);
+});
+$(video).on('pause',function(){
+    video.playbackRate = 1.0;
+    clearInterval(intervalRewind);
+});
+$("#speed").click(function() { // button function for 3x fast speed forward
+  var currentSpeed=getCookie("currentSpeed");
+  if (currentSpeed == "")
+  {
+     setCookie("currentSpeed", 10, 365);
+    //no current speed
+  }else{
+        currentSpeed=parseInt(currentSpeed) +10;
+        setCookie("currentSpeed", currentSpeed, 365);
+  }
+
+
+    //play current speed and set speed in cookie..
+    //check if cookie speed exists and increment by 3
+
+    video.playbackRate = getCookie("currentSpeed");
+
+});
+$("#negative").click(function() { // button function for rewind
+   intervalRewind = setInterval(function(){
+       video.playbackRate = 1.0;
+       if(video.currentTime == 0){
+           clearInterval(intervalRewind);
+           video.pause();
+       }
+       else{
+           video.currentTime += -.1;
+       }
+                },30);
+});
+
+
+
+
+</script>
