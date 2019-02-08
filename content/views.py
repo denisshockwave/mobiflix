@@ -1,8 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from rest_framework.decorators import api_view,permission_classes
+from django.shortcuts import render
+from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import permissions
+from rest_framework import authentication, permissions
+from rest_framework.authtoken.models import Token
+from rest_framework_jwt.settings import api_settings
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework import status
+
+
+# Create your views here.
+from django.contrib.auth.models import update_last_login
+
 from .models import *
 from django.shortcuts import render
 from .myserializers import *
@@ -33,15 +43,12 @@ def home(request):
     paginator = Paginator(content, 2)
     try:
         numbers = paginator.page(page)
-        print numbers
+
     except PageNotAnInteger:
         numbers = paginator.page(1)
     except EmptyPage:
         numbers = paginator.page(paginator.num_pages)
 
-    print "habesha"
-    for n in numbers:
-        print n.name
     return render(request, 'index.html', {'articles': numbers})
 
 def checkWorthy(code):
@@ -80,9 +87,9 @@ def watch(request,pk):
                     state="success"
                     request.session['status'] = 'WATCH'
                     t=ex[0].code_expiration
-                    print "herer"
+
                     tym=getExpiryTime(t.strftime("%Y-%m-%dT%H:%M:%SZ"))
-                    print tym
+
                     request.session['expiry_date']=tym
                 else:
                     message="Dear customer,You Code has expired.Please purchase another one to enjoy our services"
@@ -111,7 +118,7 @@ def watch(request,pk):
         checkSessionTime(request)
         status=request.session['status']
 
-    print status
+
     video=Content.objects.get(id=pk)
     return render(request, 'player.html', {'video': video,"status":status,"state":state,"message":message})
 
@@ -122,3 +129,11 @@ def getMoviePosters(request):
     c=Content.objects.all()
     serializer=ContentSerializer(c,many=True)
     return Response(serializer.data)
+
+
+class ContentSearchCategory(APIView):
+    def get(self,request,category):
+        data=Content.objects.filter(category_name=Q(category))
+        serializer=ContentSerializer(data,many=True)
+        return Response(serializer.data)
+        

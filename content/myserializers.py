@@ -5,3 +5,8 @@ class ContentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Content
         fields=('id','video_url','name','status','movie_unique','video_url','poster','description','time')
+
+class ContentCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ContentCategory
+        fields=('name',)

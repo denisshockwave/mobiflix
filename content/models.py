@@ -13,9 +13,12 @@ class Content(models.Model):
     poster=models.ImageField(upload_to="Posters",null=True, blank=True)
     description=models.TextField(max_length=255, default=None, null=True, blank=True)
     time=models.DecimalField(default=None,decimal_places=2, max_digits=20, blank=True, null=True)
+    category=models.ForeignKey("ContentCategory", null=True, blank=True,on_delete=models.CASCADE)
 
+class ContentCategory(models.Model):
+    name = models.CharField(max_length=255, default=None, null=True, blank=True)
 class Slider(models.Model):
-    content=models.ForeignKey("Content", null=True, blank=True)
+    content=models.ForeignKey("Content", null=True, blank=True,on_delete=models.CASCADE)
 
 
 class Watchers(models.Model):
@@ -23,7 +26,7 @@ class Watchers(models.Model):
     code_expiration=models.DateTimeField(default=None, null=True, blank=True)
     logged_in_counter=models.IntegerField(default=None, null=True, blank=True)
     last_login=models.DateTimeField(default=None, null=True, blank=True)
-    devices=models.ForeignKey("Devices",null=True, blank=True,)
+    devices=models.ForeignKey("Devices",null=True, blank=True,on_delete=models.CASCADE)
 class Devices(models.Model):
     device1=models.CharField(max_length=255, default=None, null=True, blank=True)
     device2=models.CharField(max_length=255, default=None, null=True, blank=True)

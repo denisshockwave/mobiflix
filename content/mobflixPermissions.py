@@ -34,7 +34,7 @@ class RemotePermissionClass:
     def verify_code(self,code):
 
         r=requests.get(API_URL+"/mobflix/code/search/"+code)
-        print r.text
+
         a=r.json()
         if "success" in a['status']:
             LocalPermissionClass().storeLocal(code,a['message']['expire_date'])
