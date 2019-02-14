@@ -22,10 +22,10 @@ path('content/all/', UploadContent.as_view()),
 path('content/item/<int:id>/', UploadContent.as_view()),
 
 #retrieve  a movie category
-path('content/item/<category>/',views.ContentSearchCategory.as_view())
+path('content/item/<category>/',views.ContentSearchCategory.as_view()),
 #verify token
+path('content/item/verify/',views.VerifyVoucher.as_view())
 
-#list a movie..upload
 
 
 

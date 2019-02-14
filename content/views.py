@@ -129,6 +129,47 @@ def getMoviePosters(request):
     c=Content.objects.all()
     serializer=ContentSerializer(c,many=True)
     return Response(serializer.data)
+class VerifyVoucher(APIView):
+    def get(self,request,voucher):
+        code = voucher
+        session={}
+
+        l=LocalPermissionClass()
+        ex=l.checkIfWatcher(code)
+        #exists
+        if ex:
+            a=l.checkExpiry(ex)
+            if a:
+                message="Code has been verified.Enjoy"
+                state="success"
+                session['status'] = 'WATCH'
+                t=ex[0].code_expiration
+
+                tym=getExpiryTime(t.strftime("%Y-%m-%dT%H:%M:%SZ"))
+
+                session['expiry_date']=tym
+            else:
+                session['message']="Dear customer,You Code has expired.Please purchase another one to enjoy our services"
+                session['state']="info"
+                session['status'] = 'POSTER'
+
+            #check if code has expired
+        else:
+            #check remotely this is for new codes sana sana
+            r=RemotePermissionClass()
+            a=r.verify_code(code)
+            if "success" in a['status']:
+                session['message']="Code has bee verified"
+                session['state']="success"
+
+                session['expiry_date']=getExpiryTime(a['message']['expire_date'])
+                session['status'] = 'WATCH'
+            else:
+                session['message']=a['message']
+                session['state']="danger"
+                session['status'] = 'POSTER'
+
+        return Response(session)
 
 
 class ContentSearchCategory(APIView):
@@ -136,4 +177,3 @@ class ContentSearchCategory(APIView):
         data=Content.objects.filter(category_name=Q(category))
         serializer=ContentSerializer(data,many=True)
         return Response(serializer.data)
-        

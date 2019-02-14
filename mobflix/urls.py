@@ -14,7 +14,8 @@ Including another pathconf
     2. Add a path to pathpatterns:  path(r'^blog/', include('blog.paths'))
 """
 
-from django.urls import path,include
+from django.conf.urls import url,include
+from django.urls import path
 from django.contrib import admin
 
 urlpatterns = [
