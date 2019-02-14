@@ -174,7 +174,7 @@ def localVerify(code):
     l=LocalPermissionClass()
     ex=l.checkIfWatcher(code)
     #exists
-    session={"message":"","status":"POSTER","state":""}
+    session={"message":"Please verify code or purchase code to continue enjoying","status":"POSTER","state":""}
     if ex:
         a=l.checkExpiry(ex)
         if a:
