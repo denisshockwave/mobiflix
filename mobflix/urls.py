@@ -23,5 +23,5 @@ urlpatterns = [
     path('docs/', include_docs_urls(title='My API title')),
     path('admin/', admin.site.urls),
     path('', include('content.urls')),
-    path('', include('staff.urls')),
+    # path('', include('staff.urls')),
 ]

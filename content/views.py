@@ -170,11 +170,129 @@ class VerifyVoucher(APIView):
                 session['status'] = 'POSTER'
 
         return Response(session)
+def localVerify(code):
+    l=LocalPermissionClass()
+    ex=l.checkIfWatcher(code)
+    #exists
+    session={"message":"","status":"POSTER","state":""}
+    if ex:
+        a=l.checkExpiry(ex)
+        if a:
+            session['message']="Code has been verified.Enjoy"
+            session['state']="success"
+            session['status'] = 'WATCH'
+            t=ex[0].code_expiration
+
+            tym=getExpiryTime(t.strftime("%Y-%m-%dT%H:%M:%SZ"))
+
+            session['expiry_date']=tym
+        else:
+            session['message']="Dear customer,You Code has expired.Please purchase another one to enjoy our services"
+            session['state']="info"
+            session['status'] = 'POSTER'
+
+
+    return session
+
+class UploadContent(APIView):
+    def post(self,request):
+        serializer = ContentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(serializer.data)
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+    def get(self,request):
+        data=Content.objects.all()
+        serializer = ContentDisplaySerializer(data,many=True)
+        return Response(serializer.data)
+
+
+class UploadContentVerifyView(APIView):
+    def get_object(self,id):
+        try:
+            return Content.objects.get(id=id)
+        except Content.DoesNotExist:
+            raise Http404
+
+    def get(self,request,id,voucher):
+        #check if user has paid,,,,return with a different url  ContentDisplaySerializer
+        v=localVerify(voucher)
+        print (v)
+        print ("======")
+
+        data=self.get_object(id)
+        if "WATCH" in v['status']:
+            print ("hhhh")
+            serializer = ContentSerializer(data)
+
+        else:
+            serializer = ContentDisplaySerializer(data)
+        return Response({"response":serializer.data,"status":v})
+
+class UploadContentDetailView(APIView):
+    def get_object(self,id):
+        try:
+            return Content.objects.get(id=id)
+        except Content.DoesNotExist:
+            raise Http404
+
+    def get(self,request,id):
+        #check if user has paid,,,,return with a different url  ContentDisplaySerializer
+
+        data=self.get_object(id)
+        serializer = ContentSerializer(data)
+        return Response(serializer.data)
+    def put(self,request,id):
+        #check if admin permission
+        serializer = ContentSerializer(data=request.data,instance=self.get_object(id))
+        return Response(serializer.data)
+    def delete(self,request,id):
+        #check if admin to delete
+        status=self.get_object(id).delete()
+        return Response({"status":status})
+
+class ContentCategory(APIView):
+    def post(self,request):
+        serializer = ContentCategorySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+    def get(self,request):
+        data=Content.objects.all()
+        serializer = ContentSerializer(data,many=True)
+        return Response(serializer.data)
+
+class ContentCategoryDetailView(APIView):
+    def get_object(self,id):
+        try:
+            return Category.objects.get(id=id)
+        except Category.DoesNotExist:
+            raise Http404
+
+    def get(self,request,id):
+        data=self.get_object(id)
+        serializer = ContentCategorySerializer(data,many=True)
+        return Response(serializer.data)
+    def put(self,request,id):
+        #check if admin permission
+        serializer = ContentCategorySerializer(data=request.data,instance=self.get_object(id))
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors)
+    def delete(self,request,id):
+        #check if admin to delete
+        status=self.get_object(id).delete()
+        return Response({"status":status})
 
 
 class ContentSearchCategory(APIView):
     """
-    
+
     """
     def get(self,request,category):
         data=Content.objects.filter(category_name=Q(category))
