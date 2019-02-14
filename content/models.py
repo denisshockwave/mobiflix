@@ -23,10 +23,14 @@ class Content(models.Model):
     imdb = models.CharField(max_length=255, default=None, null=True, blank=True)
     release = models.CharField(max_length=255, default=None, null=True, blank=True)
     rating = models.CharField(max_length=255, default=None, null=True, blank=True)
-
+    def __str__(self):
+        return self.name
 class ContentCategory(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, default=None, null=True, blank=True)
+    def __str__(self):
+        return self.name
+
 class Slider(models.Model):
     content=models.ForeignKey("Content", null=True, blank=True,on_delete=models.CASCADE)
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

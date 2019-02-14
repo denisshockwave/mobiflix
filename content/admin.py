@@ -8,12 +8,22 @@ from .models import *
 
 
 class ContentAdmin(admin.ModelAdmin):
-    list_display = ('video_url','status','movie_unique')
-    list_display_links = ('video_url','status','movie_unique')
-    search_fields = ('video_url','status','movie_unique')
+    list_display = ('name','status','category','time','genre','stars','director','county','video_qualify','imdb','release','rating')
+    list_display_links = ('name','status','time','genre','stars','director','county','video_qualify','imdb','release','rating')
+    search_fields = ('name','status','time','genre','stars','director','county','video_qualify','imdb','release','rating')
     list_per_page = 25
 
 admin.site.register(Content,ContentAdmin)
+
+class ContentCategoryAdmin(admin.ModelAdmin):
+    list_display = ('name','id')
+    list_display_links =('name','id')
+    search_fields = ('name','id')
+    list_per_page = 25
+
+admin.site.register(ContentCategory,ContentCategoryAdmin)
+
+
 class WatchersAdmin(admin.ModelAdmin):
     list_display = ('unique_code','code_expiration','logged_in_counter','last_login','devices')
     list_display_links = ('unique_code','code_expiration','logged_in_counter','last_login','devices')

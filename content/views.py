@@ -295,6 +295,7 @@ class ContentSearchCategory(APIView):
 
     """
     def get(self,request,category):
-        data=Content.objects.filter(category_name=Q(category))
+        data=Content.objects.filter(category__name__icontains=category)
+        print (data)
         serializer=ContentSerializer(data,many=True)
         return Response(serializer.data)

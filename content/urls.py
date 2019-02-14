@@ -24,7 +24,7 @@ path('content/all/', views.UploadContent.as_view()),
 path('content/item/<id>/<voucher>/', views.UploadContentVerifyView.as_view()),
 
 #retrieve  a movie category
-path('content/item/catgeory/<category>/',views.ContentSearchCategory.as_view()),
+path('content/category/<category>/',views.ContentSearchCategory.as_view()),
 #verify token
 path('content/item/verify/<voucher>/',views.VerifyVoucher.as_view()),
 
