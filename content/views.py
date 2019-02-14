@@ -173,6 +173,9 @@ class VerifyVoucher(APIView):
 
 
 class ContentSearchCategory(APIView):
+    """
+    
+    """
     def get(self,request,category):
         data=Content.objects.filter(category_name=Q(category))
         serializer=ContentSerializer(data,many=True)

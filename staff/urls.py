@@ -17,10 +17,8 @@ path('admin/category/item/',views.ContentCategoryDetailView.as_view()),
 
 
 #token
-path('api/v1/login/', obtain_jwt_token),
-path('api/v1/refresh/', refresh_jwt_token),
-
-#refresh
+path('admin/v1/login/', obtain_jwt_token),
+path('admin/v1/refresh/', refresh_jwt_token),
 
 
 
