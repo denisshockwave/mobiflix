@@ -297,5 +297,24 @@ class ContentSearchCategory(APIView):
     def get(self,request,category):
         data=Content.objects.filter(category__name__icontains=category)
         print (data)
-        serializer=ContentSerializer(data,many=True)
+        serializer=ContentDisplaySerializer(data,many=True)
+        return Response(serializer.data)
+
+class SearchQuery(APIView):
+    def get(self,request):
+
+        query = request.GET['query']
+        print (query)
+
+        term_list = query.strip().split(' ')
+        # p =  Project.objects.filter(awardStatus="UNAWARDED")
+        p=Content.objects.all()
+
+
+        q = Q(name__icontains=term_list[0]) | Q(status__icontains=term_list[0]) | Q(category__name__icontains=term_list[0]) | Q(description__icontains=term_list[0]) | Q(director__icontains=term_list[0]) | Q(video_qualify__icontains=term_list[0])
+
+        for term in term_list[1:]:
+            q.add((Q(name__icontains=term) | Q(status__icontains=term) | Q(category__name__icontains=term) | Q(description__icontains=term) | Q(director__icontains=term) | Q(video_qualify__icontains=term)), q.connector)
+        search= p.filter(q)
+        serializer=ContentDisplaySerializer(search,many=True)
         return Response(serializer.data)
