@@ -41,14 +41,20 @@ class Content(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        self.slug= slugify(self.name)
+        if self.season_available == "Y":
+            
+            self.slug = slugify(self.name)+"-"+str(self.season.number)
+        else:
+            self.slug = slugify(self.name)
+
+        
         super(Content, self).save(*args, **kwargs)
 
 class Series(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     number= models.IntegerField( default=0, null=True, blank=True)
     def __str__(self):
-        return self.number
+        return str(self.number)
 class Episode(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     number = models.IntegerField(
@@ -57,7 +63,7 @@ class Episode(models.Model):
         max_length=255, default=None, null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.number)
 class ContentCategory(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, default=None, null=True, blank=True)

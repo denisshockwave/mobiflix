@@ -38,7 +38,7 @@ path('admin/content/delete/<id>/', views.UploadContentDetailView.as_view()),
 path('admin/content/update/<id>/', views.UploadContentDetailView.as_view()),
 
 
-path('admin/category/list/',views.ContentCategory.as_view()),
+path('admin/category/list/',views.ContentCategoryView.as_view()),
 path('admin/category/item/',views.ContentCategoryDetailView.as_view()),
 
 

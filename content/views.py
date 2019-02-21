@@ -256,10 +256,10 @@ class UploadContentDetailView(APIView):
 class SeriesDetailView(APIView):
     def get(self, request, slug):
         data = Content.objects.filter(slug=slug)
-        serializer = ContentCategorySerializer(data, many=True)
+        serializer = ContentDisplaySerializer(data, many=True)
         return Response(serializer.data)
 
-class ContentCategory(APIView):
+class ContentCategoryView(APIView):
     def post(self,request):
         serializer = ContentCategorySerializer(data=request.data)
         if serializer.is_valid():
