@@ -6,15 +6,22 @@ import uuid
 # Create your models here.
 
 class Content(models.Model):
+    CHOICES = (
+        ('Y', 'YES'),
+        ('N', 'NO'),
+    )
+ 
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     video_url=models.FileField(upload_to="uploads",null=True, blank=True)
     name=models.CharField(max_length=255, default=None, null=True, blank=True)
-    status=models.CharField(max_length=255, default=None, null=True, blank=True)
+    status = models.CharField(
+        max_length=255, default=None, null=True, blank=True, choices=CHOICES)
     movie_unique=models.TextField(max_length=255, default=None, null=True, blank=True)
     poster=models.ImageField(upload_to="Posters",null=True, blank=True)
     description=models.TextField(max_length=255, default=None, null=True, blank=True)
     time=models.DecimalField(default=None,decimal_places=2, max_digits=20, blank=True, null=True)
-    category=models.ForeignKey("ContentCategory", null=True, blank=True,on_delete=models.CASCADE)
+    category=models.ForeignKey("ContentCategory", null=True, blank=True,on_delete=models.PROTECT)
     genre=models.CharField(max_length=255, default=None, null=True, blank=True)
     stars=models.CharField(max_length=255, default=None, null=True, blank=True)
     director=models.CharField(max_length=255, default=None, null=True, blank=True)
@@ -23,6 +30,24 @@ class Content(models.Model):
     imdb = models.CharField(max_length=255, default=None, null=True, blank=True)
     release = models.CharField(max_length=255, default=None, null=True, blank=True)
     rating = models.CharField(max_length=255, default=None, null=True, blank=True)
+    season= models.ForeignKey("Series", null=True, blank=True, on_delete=models.PROTECT)
+    episode = models.ForeignKey("Episode", null=True, blank=True, on_delete=models.PROTECT)
+    season_available = models.CharField(
+        max_length=255, default=None, null=True, blank=True,choices=CHOICES)
+    def __str__(self):
+        return self.name
+class Series(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name= models.CharField(max_length=255, default=None, null=True, blank=True)
+    def __str__(self):
+        return self.name
+class Episode(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(
+            max_length=255, default=None, null=True, blank=True)
+    tagline = models.CharField(
+        max_length=255, default=None, null=True, blank=True)
+
     def __str__(self):
         return self.name
 class ContentCategory(models.Model):
