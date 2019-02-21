@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.template.defaultfilters import slugify
 
 from django.db import models
 import uuid
@@ -15,6 +16,8 @@ class Content(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     video_url=models.FileField(upload_to="uploads",null=True, blank=True)
     name=models.CharField(max_length=255, default=None, null=True, blank=True)
+    slug = models.SlugField(
+        max_length=1000, default="movie", null=True, blank=True)
     status = models.CharField(
         max_length=255, default=None, null=True, blank=True, choices=CHOICES)
     movie_unique=models.TextField(max_length=255, default=None, null=True, blank=True)
@@ -36,15 +39,20 @@ class Content(models.Model):
         max_length=255, default=None, null=True, blank=True,choices=CHOICES)
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug= slugify(self.name)
+        super(Content, self).save(*args, **kwargs)
+
 class Series(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name= models.CharField(max_length=255, default=None, null=True, blank=True)
+    number= models.IntegerField( default=0, null=True, blank=True)
     def __str__(self):
-        return self.name
+        return self.number
 class Episode(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(
-            max_length=255, default=None, null=True, blank=True)
+    number = models.IntegerField(
+             default=0, null=True, blank=True)
     tagline = models.CharField(
         max_length=255, default=None, null=True, blank=True)
 
@@ -71,3 +79,4 @@ class Devices(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     device1=models.CharField(max_length=255, default=None, null=True, blank=True)
     device2=models.CharField(max_length=255, default=None, null=True, blank=True)
+ 

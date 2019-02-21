@@ -8,7 +8,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework_jwt.settings import api_settings
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import status
-
+from django.http import Http404
 
 # Create your views here.
 from django.contrib.auth.models import update_last_login
@@ -252,6 +252,13 @@ class UploadContentDetailView(APIView):
         status=self.get_object(id).delete()
         return Response({"status":status})
 
+
+class SeriesDetailView(APIView):
+    def get(self, request, slug):
+        data = Content.objects.filter(slug=slug)
+        serializer = ContentCategorySerializer(data, many=True)
+        return Response(serializer.data)
+
 class ContentCategory(APIView):
     def post(self,request):
         serializer = ContentCategorySerializer(data=request.data)
@@ -290,6 +297,8 @@ class ContentCategoryDetailView(APIView):
         return Response({"status":status})
 
 
+
+        
 class ContentSearchCategory(APIView):
     """
 

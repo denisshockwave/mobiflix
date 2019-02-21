@@ -29,12 +29,14 @@ path('content/category/<category>/',views.ContentSearchCategory.as_view()),
 path('content/item/verify/<voucher>/',views.VerifyVoucher.as_view()),
 
 path('content/search/',views.SearchQuery.as_view()),
+path('content/series/<slug>/', views.SeriesDetailView.as_view()),
 
 
 
 path('admin/content/upload',views.UploadContent.as_view()),
 path('admin/content/delete/<id>/', views.UploadContentDetailView.as_view()),
 path('admin/content/update/<id>/', views.UploadContentDetailView.as_view()),
+
 
 path('admin/category/list/',views.ContentCategory.as_view()),
 path('admin/category/item/',views.ContentCategoryDetailView.as_view()),

@@ -6,14 +6,36 @@ class ContentCategorySerializer(serializers.ModelSerializer):
         model = ContentCategory
         fields=('name',)
 
+
+class SeriesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Series
+        fields = ('number','id')
+
+
+class EpisodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Episode
+        fields = ('number', 'id')
+
 class ContentSerializer(serializers.ModelSerializer):
     category=ContentCategorySerializer()
+    episode = EpisodeSerializer()
+    season = SeriesSerializer()
     class Meta:
         model=Content
-        fields=('id','name','status','category','movie_unique','video_url','poster','description','time','genre','stars','director','county','video_qualify','imdb','release','rating')
+        fields=('id','name','status','category','movie_unique','video_url','poster',
+        'description','time','genre','stars','director','county',
+        'video_qualify','imdb','release','rating','season_available','season','episode','slug',)
 
 class ContentDisplaySerializer(serializers.ModelSerializer):
     category =ContentCategorySerializer()
+    episode = EpisodeSerializer()
+    season = SeriesSerializer()
     class Meta:
         model=Content
-        fields=('id','name','status','category','movie_unique','poster','description','time','genre','stars','director','county','video_qualify','imdb','release','rating')
+        fields = ('id', 'name', 'status', 'category', 'movie_unique', 'poster', 'description', 'time', 'genre',
+                  'stars', 'director', 'county', 'video_qualify', 'imdb', 'release', 'rating', 'season', 'episode', 'slug',)
+
+
+

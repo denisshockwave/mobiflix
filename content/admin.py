@@ -42,9 +42,9 @@ admin.site.register(Devices,DevicesAdmin)
 
 
 class SeriesAdmin(admin.ModelAdmin):
-    list_display = ('name', 'id')
-    list_display_links = ('name',)
-    search_fields = ('name', 'id')
+    list_display = ('number', 'id')
+    list_display_links = ('number',)
+    search_fields = ('number', 'id')
     list_per_page = 25
 
 
@@ -52,10 +52,12 @@ admin.site.register(Series,SeriesAdmin)
 
 
 class EpisodeAdmin(admin.ModelAdmin):
-    list_display = ('name', 'id','tagline')
-    list_display_links = ('name',)
-    search_fields = ('name', 'tagline')
+    list_display = ('number', 'id','tagline')
+    list_display_links = ('number',)
+    search_fields = ('number', 'tagline')
     list_per_page = 25
 
 
 admin.site.register(Episode, EpisodeAdmin)
+
+
