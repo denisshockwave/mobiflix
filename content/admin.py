@@ -24,6 +24,17 @@ class ContentCategoryAdmin(admin.ModelAdmin):
 admin.site.register(ContentCategory,ContentCategoryAdmin)
 
 
+class ErrorLogAdmin(admin.ModelAdmin):
+    list_display = ('name', 'id','message','time_logged')
+    list_display_links = ('name', 'id')
+    search_fields = ('name', 'id')
+    list_per_page = 25
+
+
+admin.site.register(ErrorLog, ErrorLogAdmin)
+
+
+
 class WatchersAdmin(admin.ModelAdmin):
     list_display = ('unique_code','code_expiration','logged_in_counter','last_login','devices')
     list_display_links = ('unique_code','code_expiration','logged_in_counter','last_login','devices')

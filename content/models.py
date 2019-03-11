@@ -37,8 +37,13 @@ class Content(models.Model):
     episode = models.ForeignKey("Episode", null=True, blank=True, on_delete=models.PROTECT)
     season_available = models.CharField(
         max_length=255, default=None, null=True, blank=True,choices=CHOICES)
+    time_uploaded = models.DateTimeField(auto_now_add=True)
     def __str__(self):
-        return self.name
+        if self.name:
+            return self.name
+        else:
+            return '-----'
+
 
     def save(self, *args, **kwargs):
         if self.season_available == "Y":
@@ -67,6 +72,18 @@ class Episode(models.Model):
 class ContentCategory(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=255, default=None, null=True, blank=True)
+    def __str__(self):
+        return self.name
+
+
+class ErrorLog(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    name = models.CharField(
+        max_length=255, default=None, null=True, blank=True)
+
+    message = models.CharField(
+        max_length=255, default=None, null=True, blank=True)
+    time_logged= models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return self.name
 

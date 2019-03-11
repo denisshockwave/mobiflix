@@ -31,7 +31,9 @@ path('content/item/verify/<voucher>/',views.VerifyVoucher.as_view()),
 path('content/search/',views.SearchQuery.as_view()),
 path('content/series/<slug>/', views.SeriesDetailView.as_view()),
 
+#crawl content
 
+    path('content/crawl/', views.ContentCrawl.as_view()),
 
 path('admin/content/upload',views.UploadContent.as_view()),
 path('admin/content/delete/<id>/', views.UploadContentDetailView.as_view()),
