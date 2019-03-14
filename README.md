@@ -11,7 +11,7 @@ python manage.py runserver
 
 
 To read documentation  go to
-http://127.0.0.1:8000/docs
+https://mobiflix-net.herokuapp.com/docs/
 
 
 VERIFY VOUCHER api
