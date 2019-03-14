@@ -1,1 +1,1 @@
-heroku logs --tail
+web: gunicorn mobiflix.wsgi --log-file -
