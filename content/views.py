@@ -268,8 +268,8 @@ class ContentCategoryView(APIView):
         else:
             return Response(serializer.errors)
     def get(self,request):
-        data=Content.objects.all()
-        serializer = ContentSerializer(data,many=True)
+        data=ContentCategory.objects.all()
+        serializer = ContentCategorySerializer(data,many=True)
         return Response(serializer.data)
 
 class ContentCategoryDetailView(APIView):

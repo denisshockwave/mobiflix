@@ -21,8 +21,8 @@ class LocalPermissionClass:
 
     def storeLocal(self,code,expiration_date):
         print("expiration date")
-        print (type(expiration_date))
-
+        print (expiration_date)
+   
 
         expiration_date=datetime.datetime.strptime(expiration_date,"%Y-%m-%d %H:%M:%S")
         print (expiration_date)
@@ -30,6 +30,7 @@ class LocalPermissionClass:
         w=Watchers()
         w.unique_code=code
         w.code_expiration = expiration_date
+        w.save()
         return True
 
 class RemotePermissionClass:

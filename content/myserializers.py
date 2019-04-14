@@ -4,7 +4,7 @@ from rest_framework import serializers
 class ContentCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ContentCategory
-        fields=('name',)
+        fields=('name','id')
 
 
 class SeriesSerializer(serializers.ModelSerializer):
