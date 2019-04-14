@@ -55,7 +55,7 @@ def checkWorthy(code):
     pass
 def getExpiryTime(exp_tym):
     #current_tym
-    exp=datetime.datetime.strptime(exp_tym,"%Y-%m-%dT%H:%M:%SZ")
+    exp=datetime.datetime.strptime(exp_tym,"%Y-%m-%d %H:%M:%S")
     a=datetime.datetime.strftime(exp, '%Y-%m-%d %H:%M:%S')
     return a
 def checkSessionTime(req):
@@ -88,7 +88,7 @@ def watch(request,pk):
                     request.session['status'] = 'WATCH'
                     t=ex[0].code_expiration
 
-                    tym=getExpiryTime(t.strftime("%Y-%m-%dT%H:%M:%SZ"))
+                    tym=getExpiryTime(t.strftime("%Y-%m-%d %H:%M:%"))
 
                     request.session['expiry_date']=tym
                 else:
@@ -145,7 +145,7 @@ class VerifyVoucher(APIView):
                 session['status'] = 'WATCH'
                 t=ex[0].code_expiration
 
-                tym=getExpiryTime(t.strftime("%Y-%m-%dT%H:%M:%SZ"))
+                tym=getExpiryTime(t.strftime("%Y-%m-%d %H:%M:%S"))
 
                 session['expiry_date']=tym
             else:
@@ -183,7 +183,7 @@ def localVerify(code):
             session['status'] = 'WATCH'
             t=ex[0].code_expiration
 
-            tym=getExpiryTime(t.strftime("%Y-%m-%dT%H:%M:%SZ"))
+            tym=getExpiryTime(t.strftime("%Y-%m-%d %H:%M:%S"))
 
             session['expiry_date']=tym
         else:

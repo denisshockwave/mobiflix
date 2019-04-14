@@ -20,12 +20,16 @@ class LocalPermissionClass:
             return False
 
     def storeLocal(self,code,expiration_date):
-        expiration_date=datetime.datetime.strptime(expiration_date,"%Y-%m-%dT%H:%M:%SZ")
+        print("expiration date")
+        print (type(expiration_date))
+
+
+        expiration_date=datetime.datetime.strptime(expiration_date,"%Y-%m-%d %H:%M:%S")
+        print (expiration_date)
 
         w=Watchers()
         w.unique_code=code
-        w.code_expiration=datetime.datetime.strftime(expiration_date,"%Y-%m-%d %H:%M")
-        w.save()
+        w.code_expiration = expiration_date
         return True
 
 class RemotePermissionClass:
