@@ -61,3 +61,9 @@ class EpisodeAdmin(admin.ModelAdmin):
 admin.site.register(Episode, EpisodeAdmin)
 
 
+class MovieServerAdmin(admin.ModelAdmin):
+    list_display = ('id', 'ip', )
+    list_display_links = ('ip',)
+    search_fields = ('ip',)
+    list_per_page = 25
+admin.site.register(MovieServer,MovieServerAdmin)

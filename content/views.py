@@ -23,6 +23,7 @@ from .filter import MovieFilter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import generic
 import datetime
+
 class IndexView(generic.ListView):
     model = Content
     template_name = 'index.html'
@@ -72,7 +73,11 @@ def watch(request,pk):
     #check if the user is allowed to watch this video
     status="POSTER"
     state=""
+
     message=""
+   
+        
+
     if request.method == "POST":
         if request.POST.get("submit_code"):
             code=request.POST['code']
@@ -134,6 +139,16 @@ class VerifyVoucher(APIView):
         code = voucher
         session={}
 
+        url = "http://192.168.88.1"
+        try:
+            url = MovieServer.objects.all()[0]
+            url=url.ip
+            print("sevrer ip")
+        except:
+            pass
+
+
+        print (url)
         l=LocalPermissionClass()
         ex=l.checkIfWatcher(code)
         #exists
@@ -146,12 +161,13 @@ class VerifyVoucher(APIView):
                 t=ex[0].code_expiration
 
                 tym=getExpiryTime(t.strftime("%Y-%m-%d %H:%M:%S"))
-
+                session['base_url'] = url
                 session['expiry_date']=tym
             else:
                 session['message']="Dear customer,You Code has expired.Please purchase another one to enjoy our services"
                 session['state']="info"
                 session['status'] = 'POSTER'
+             
 
             #check if code has expired
         else:
@@ -161,6 +177,7 @@ class VerifyVoucher(APIView):
             if "success" in a['status']:
                 session['message']="Code has bee verified"
                 session['state']="success"
+                session['base_url'] = url
 
                 session['expiry_date']=getExpiryTime(a['message']['expire_date'])
                 session['status'] = 'WATCH'
@@ -177,6 +194,14 @@ def localVerify(code):
     session={"message":"Please verify code or purchase code to continue enjoying","status":"POSTER","state":""}
     if ex:
         a=l.checkExpiry(ex)
+        url = "http://192.168.88.1"
+        try:
+            url = MovieServer.objects.all()[0]
+            url = url.ip
+            print("sevrer ip")
+        except:
+            pass
+
         if a:
             session['message']="Code has been verified.Enjoy"
             session['state']="success"
@@ -184,7 +209,7 @@ def localVerify(code):
             t=ex[0].code_expiration
 
             tym=getExpiryTime(t.strftime("%Y-%m-%d %H:%M:%S"))
-
+            session['base_url'] = url
             session['expiry_date']=tym
         else:
             session['message']="Dear customer,You Code has expired.Please purchase another one to enjoy our services"

@@ -86,3 +86,6 @@ class Devices(models.Model):
     device1=models.CharField(max_length=255, default=None, null=True, blank=True)
     device2=models.CharField(max_length=255, default=None, null=True, blank=True)
  
+
+class MovieServer(models.Model):
+    ip = models.CharField(max_length=255, default="http://127.0.0.1:8000", null=True, blank=True)
