@@ -1,1 +1,1 @@
-web: gunicorn mobiflix.wsgi --log-file -
+web: gunicorn mobflix.wsgi --log-file -
