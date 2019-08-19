@@ -43,6 +43,6 @@ Store expiry date in a cookie and try analyze it to check expiry datetime
 
 Go to the project directory and run the following commands:
 
-    - START: `make start` to run the application
-    - STOP: `make stop` to stop the application and destroy the container and the image
-    - HELP: `make help` to view the list of available options
+- START: `make start` to run the application
+- STOP: `make stop` to stop the application and destroy the container and the image
+- HELP: `make help` to view the list of available options
