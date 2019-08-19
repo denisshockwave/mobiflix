@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/mobiflix
+      - ./logs:/var/log
+    command: gunicorn -b 0.0.0.0:8000 --error-logfile /var/log/error.log --access-logfile /var/log/access.log -w 5 mobflix.wsgi
+    ports:
+      - "8000:8000"
+    container_name: mobiflix
