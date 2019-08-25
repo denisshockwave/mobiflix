@@ -23,11 +23,8 @@ from .filter import MovieFilter
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views import generic
 import datetime
-<<<<<<< HEAD
-=======
 from .filer import Crawler, ThreadingDaemon
 
->>>>>>> crawling
 
 class IndexView(generic.ListView):
     model = Content
@@ -363,7 +360,7 @@ class ContentCrawl(APIView):
     def post(self,request):
         #initiate crawling daemon
         run = ThreadingDaemon(request.data['dir'])
-        print (run)
+      
         return Response({})
 
         

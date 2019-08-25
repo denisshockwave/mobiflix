@@ -25,19 +25,19 @@ class Crawler:
 
 
         video_files = [f for f in self.all_files(dir)
-            if f.endswith(('.mp4', '.flv', '.avi', '.mov', '.wmv', '.MP4', '.mkv'))]
+            if f.endswith(('.mp4', '.flv', '.avi', '.mov', '.wmv', '.MP4', '.mkv','.3gp'))]
         c=Content.objects.all()
         print (video_files)
         for file in video_files:
             # Convert file-names to urls
-            file_url = pathlib.Path(file).as_uri().split("/media/uploads")
-            try:
-                rel_url = "/uploads" + file_url[1]
-            except:
-                error.storeError({"name": "UNEXPECTED URL.",
-                                  "message": "The was a problem "+file_url})
-                return False
-
+            # file_url = pathlib.Path(file).as_uri().split("/media/uploads")
+            # try:
+            #     rel_url = "/uploads" + file_url[1]
+            # except:
+            #     error.storeError({"name": "UNEXPECTED URL.",
+            #                       "message": "The was a problem "+file_url})
+            #     return False
+            rel_url =file
 
             print (rel_url)
             if not self.checkIfUrlIndexBefore(c, rel_url):

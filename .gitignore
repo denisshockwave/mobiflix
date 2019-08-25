@@ -1,1 +1,8 @@
-media
+media/
+
+#To ignore:
+
+#git update-index --assume-unchanged <path/to/file>
+#To undo ignore:
+
+#git update-index --no-assume-unchanged <path/to/file>
