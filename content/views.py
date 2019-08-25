@@ -154,17 +154,16 @@ class VerifyVoucher(APIView):
         l=LocalPermissionClass()
         ex=l.checkIfWatcher(code)
         #exists
-        if ex:
-            a=l.checkExpiry(ex)
+        if ex: #watch code has been logged
+            a=l.checkCount(ex)
             if a:
                 message="Code has been verified.Enjoy"
                 state="success"
                 session['status'] = 'WATCH'
-                t=ex[0].code_expiration
-
-                tym=getExpiryTime(t.strftime("%Y-%m-%d %H:%M:%S"))
                 session['base_url'] = url
-                session['expiry_date']=tym
+                session['expiry_date']="2100-01-25 11:49:49"
+
+                session['count']=a
             else:
                 session['message']="Dear customer,You Code has expired.Please purchase another one to enjoy our services"
                 session['state']="info"
@@ -183,12 +182,19 @@ class VerifyVoucher(APIView):
 
                 session['expiry_date']=getExpiryTime(a['message']['expire_date'])
                 session['status'] = 'WATCH'
+                #####
+                # Initiate voucherCount
+              
+                ###
             else:
                 session['message']=a['message']
                 session['state']="danger"
                 session['status'] = 'POSTER'
 
         return Response(session)
+
+
+
 def localVerify(code):
     l=LocalPermissionClass()
     ex=l.checkIfWatcher(code)
@@ -365,3 +371,20 @@ class ContentCrawl(APIView):
 
         
         #daemonize the crawling process and alert user
+
+class LinkCounter(APIView):
+    def post(self,request):
+        data=request.data
+        voucher = data['voucher']
+        try:
+            v = Watchers.objects.get(voucher=voucher)
+            if v.count ==v.paid_count:
+                return Response({"status": "error", "message": "Voucher has been utilized"})
+            
+            v.count=v.count+1
+            v.save()
+
+            return Response({"count":v.count})
+        except:
+             
+            return Response({"status":"error","message":"Voucher does not exist or not verified"})

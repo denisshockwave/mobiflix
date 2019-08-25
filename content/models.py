@@ -98,6 +98,10 @@ class Watchers(models.Model):
     logged_in_counter=models.IntegerField(default=None, null=True, blank=True)
     last_login=models.DateTimeField(default=None, null=True, blank=True)
     devices=models.ForeignKey("Devices",null=True, blank=True,on_delete=models.CASCADE)
+    paid_count = models.IntegerField(default=0, null=True, blank=True)
+    count = models.IntegerField(default=0, null=True, blank=True)
+
+
 class Devices(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     device1=models.CharField(max_length=255, default=None, null=True, blank=True)
@@ -106,3 +110,12 @@ class Devices(models.Model):
 
 class MovieServer(models.Model):
     ip = models.CharField(max_length=255, default="http://127.0.0.1:8000", null=True, blank=True)
+
+# class VoucherCounter(models.Model):
+#     id = models.UUIDField(
+#          primary_key=True, default=uuid.uuid4, editable=False)
+#     paid_count = models.IntegerField(default=0, null=True, blank=True)
+#     count= models.IntegerField(default=0, null=True, blank=True)
+ 
+#     voucher =models.CharField(max_length=255, default=None, null=True, blank=True)
+ 
