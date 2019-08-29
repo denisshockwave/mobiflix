@@ -4,16 +4,19 @@ from .models import *
 from django.conf import settings
 from .ErrorLogger import *
 error=ErrorLogger()
-
+ext = ('.mp4', '.flv', '.avi', '.mov', '.wmv', '.MP4', '.mkv', '.3gp')
 class Crawler:
 
     
     def all_files(self,directory):
         for path, dirs, files in os.walk(directory):
             for f in files:
-                yield os.path.join(path, f)
+                yield os.path.join(path,f)
+    def clean(file_name):
+        unwanted=["[","]","-","."]
+        
+        
 
-    
     def begin(self, dir):
         #check if app is allowed to upload from directory
         # if not self.checkUploadFromDirectoryPermissions(file_path):
@@ -23,9 +26,12 @@ class Crawler:
             error.storeError({"name": "INCORRECT DIRECTORY",
                               "message": "You have entered the incorrect url with content to crawl"})
 
+        #change file names
+
 
         video_files = [f for f in self.all_files(dir)
-            if f.endswith(('.mp4', '.flv', '.avi', '.mov', '.wmv', '.MP4', '.mkv','.3gp'))]
+            if f.endswith(ext)]
+            
         c=Content.objects.all()
         print (video_files)
         for file in video_files:
@@ -66,15 +72,26 @@ class Crawler:
     
     def storeUrl(self,url):
         #check if url exists in database
-       c = Content()
-       c.video_url=url
-       c.name=self.getName(url)
-       c.save()
+        
+        # c = Content()
+        # c.video_url = '/uploads/'+self.getName(url)
+        # c.name=self.getName(url)
+        # c.save()
+
+   
+        print(self.clean_name(self.getName(url)))
+    def clean_name(self,name):
+        unwanted_chars=['[',']','.','-',' ']
+        name=name.rsplit(".",1)[0]
+        for x in unwanted_chars:
+            name.replace("","_")
+        
     def getName(self,url):
         u=url.split("/")
-        print (u)
-        return  u[2].replace(".","_")
+        
+        return u[len(u) - 1]
 
+        
     # 
     # def checkUploadFromDirectoryPermissions(self,file_path):
     #     pass

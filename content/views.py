@@ -145,28 +145,34 @@ class VerifyVoucher(APIView):
         try:
             url = MovieServer.objects.all()[0]
             url=url.ip
-            print("sevrer ip")
+         
         except:
             pass
 
 
-        print (url)
+
         l=LocalPermissionClass()
         ex=l.checkIfWatcher(code)
         #exists
+        print(ex)
+        print("================")
         if ex: #watch code has been logged
+            print("checked bro")
             a=l.checkCount(ex)
+            print(a)
             if a:
+               
                 message="Code has been verified.Enjoy"
                 state="success"
                 session['status'] = 'WATCH'
                 session['base_url'] = url
                 session['expiry_date']="2100-01-25 11:49:49"
-
-                session['count']=a
+                session['count'] = ex[0].paid_count-ex[0].count # remaining
+             
             else:
-                session['message']="Dear customer,You Code has expired.Please purchase another one to enjoy our services"
+                session['message']="Dear customer,You Code has been fully utilized.Please purchase another one to enjoy our services"
                 session['state']="info"
+                session['count']=0 #remaining downloads
                 session['status'] = 'POSTER'
              
 
@@ -179,7 +185,7 @@ class VerifyVoucher(APIView):
                 session['message']="Code has bee verified"
                 session['state']="success"
                 session['base_url'] = url
-
+                session['count']=a['paid_count']
                 session['expiry_date']=getExpiryTime(a['message']['expire_date'])
                 session['status'] = 'WATCH'
                 #####
@@ -191,6 +197,7 @@ class VerifyVoucher(APIView):
                 session['state']="danger"
                 session['status'] = 'POSTER'
 
+        print(session)
         return Response(session)
 
 
@@ -206,7 +213,7 @@ def localVerify(code):
         try:
             url = MovieServer.objects.all()[0]
             url = url.ip
-            print("sevrer ip")
+           
         except:
             pass
 
@@ -251,12 +258,9 @@ class UploadContentVerifyView(APIView):
     def get(self,request,id,voucher):
         #check if user has paid,,,,return with a different url  ContentDisplaySerializer
         v=localVerify(voucher)
-        print (v)
-        print ("======")
-
         data=self.get_object(id)
         if "WATCH" in v['status']:
-            print ("hhhh")
+         
             serializer = ContentSerializer(data)
 
         else:
@@ -338,7 +342,7 @@ class ContentSearchCategory(APIView):
     """
     def get(self,request,category):
         data=Content.objects.filter(category__name__icontains=category)
-        print (data)
+      
         serializer=ContentDisplaySerializer(data,many=True)
         return Response(serializer.data)
 
@@ -346,7 +350,7 @@ class SearchQuery(APIView):
     def get(self,request):
 
         query = request.GET['query']
-        print (query)
+    
 
         term_list = query.strip().split(' ')
         # p =  Project.objects.filter(awardStatus="UNAWARDED")

@@ -19,17 +19,18 @@ class LocalPermissionClass:
         else:
             return False
     def checkCount(self,w):
+        print(w[0].paid_count)
+        print(w[0].count)
         if w[0].paid_count==w[0].count:
             return False
         else:
-            return w[0].count
+            return True
     def storeLocal(self,code,expiration_date,count):
-        print("expiration date")
-        print (expiration_date)
+ 
    
 
         expiration_date=datetime.datetime.strptime(expiration_date,"%Y-%m-%d %H:%M:%S")
-        print (expiration_date)
+   
 
         w=Watchers()
         w.unique_code=code
@@ -48,6 +49,7 @@ class RemotePermissionClass:
         a=r.json()
         if "success" in a['status']:
             LocalPermissionClass().storeLocal(code,a['message']['expire_date'],a['message']['count'])
+            print(a)
             return a
         else:
             return a
