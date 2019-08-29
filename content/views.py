@@ -388,7 +388,7 @@ class LinkCounter(APIView):
             v.count=v.count+1
             v.save()
 
-            return Response({"count":v.count})
+            return Response({"count":v.count,"status":"success","message":"Succesful download"})
         except:
              
             return Response({"status":"error","message":"Voucher does not exist or not verified"})

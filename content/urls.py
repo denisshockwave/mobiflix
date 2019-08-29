@@ -28,7 +28,7 @@ path('content/category/<category>/',views.ContentSearchCategory.as_view()),
 
 #verify token
 path('content/items/verify/<voucher>/',views.VerifyVoucher.as_view()),
-path('content/item/download/<voucher>/'    , views.LinkCounter.as_view()),
+path('content/item/download/'    , views.LinkCounter.as_view()),
 
 path('content/search/',views.SearchQuery.as_view()),
 path('content/series/<slug>/', views.SeriesDetailView.as_view()),
