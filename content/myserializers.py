@@ -26,7 +26,7 @@ class ContentSerializer(serializers.ModelSerializer):
         model=Content
         fields=('id','name','status','category','movie_unique','video_url','poster',
         'description','time','genre','stars','director','county',
-        'video_qualify','imdb','release','rating','season_available','season','episode','slug',)
+        'video_qualify','imdb','release','rating','season_available','season','episode','slug','trailer_url')
 
 class ContentDisplaySerializer(serializers.ModelSerializer):
     category =ContentCategorySerializer()
@@ -35,7 +35,7 @@ class ContentDisplaySerializer(serializers.ModelSerializer):
     class Meta:
         model=Content
         fields = ('id', 'name', 'status', 'category', 'movie_unique', 'poster', 'description', 'time', 'genre',
-                  'stars', 'director', 'county', 'video_qualify', 'imdb', 'release', 'rating', 'season', 'episode', 'slug',)
+                  'stars', 'director', 'county', 'video_qualify', 'imdb', 'release', 'rating', 'season', 'episode', 'slug','trailer_url',)
 
 
 

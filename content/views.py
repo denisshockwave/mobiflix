@@ -87,8 +87,9 @@ def watch(request,pk):
             l=LocalPermissionClass()
             ex=l.checkIfWatcher(code)
             #exists
+
             if ex:
-                a=l.checkExpiry(ex)
+                a = l.checkCount(ex)
                 if a:
                     message="Code has been verified.Enjoy"
                     state="success"
@@ -96,7 +97,7 @@ def watch(request,pk):
                     t=ex[0].code_expiration
 
                     tym=getExpiryTime(t.strftime("%Y-%m-%d %H:%M:%"))
-
+                    
                     request.session['expiry_date']=tym
                 else:
                     message="Dear customer,You Code has expired.Please purchase another one to enjoy our services"
@@ -111,6 +112,7 @@ def watch(request,pk):
                 if "success" in a['status']:
                     message="Code has bee verified"
                     state="success"
+                    session['count'] = a['paid_count']
 
                     request.session['expiry_date']=getExpiryTime(a['message']['expire_date'])
                     request.session['status'] = 'WATCH'
@@ -382,7 +384,7 @@ class LinkCounter(APIView):
         voucher = data['voucher']
         try:
             v = Watchers.objects.get(unique_code=voucher)
-            if v.count ==v.paid_count:
+            if v.count >=v.paid_count:
                 return Response({"status": "error", "message": "Voucher has been utilized"})
             
             v.count=v.count+1

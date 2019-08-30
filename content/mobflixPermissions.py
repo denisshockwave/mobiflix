@@ -21,7 +21,7 @@ class LocalPermissionClass:
     def checkCount(self,w):
         print(w[0].paid_count)
         print(w[0].count)
-        if w[0].paid_count==w[0].count:
+        if  w[0].count>=w[0].paid_count:
             return False
         else:
             return True

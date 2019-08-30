@@ -15,6 +15,7 @@ class Content(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     video_url=models.FileField(upload_to="uploads",null=True, blank=True)
+    trailer_url = models.FileField(upload_to="trailer", null=True, blank=True)
     name=models.CharField(max_length=255, default=None, null=True, blank=True)
     slug = models.SlugField(
         max_length=1000, default="movie", null=True, blank=True)
@@ -58,8 +59,11 @@ class Content(models.Model):
 class Series(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     number= models.IntegerField( default=0, null=True, blank=True)
+
     def __str__(self):
         return str(self.number)
+
+
 class Episode(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     number = models.IntegerField(
