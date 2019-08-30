@@ -381,7 +381,7 @@ class LinkCounter(APIView):
         data=request.data
         voucher = data['voucher']
         try:
-            v = Watchers.objects.get(voucher=voucher)
+            v = Watchers.objects.get(unique_code=voucher)
             if v.count ==v.paid_count:
                 return Response({"status": "error", "message": "Voucher has been utilized"})
             

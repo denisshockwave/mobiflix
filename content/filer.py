@@ -5,6 +5,7 @@ from django.conf import settings
 from .ErrorLogger import *
 error=ErrorLogger()
 ext = ('.mp4', '.flv', '.avi', '.mov', '.wmv', '.MP4', '.mkv', '.3gp')
+unwanted_chars = ['[', ']', '.', '-', ' ', '(', ')', '#']
 class Crawler:
 
     
@@ -50,7 +51,7 @@ class Crawler:
                 #storeUrl in content database
                 print ("store url")
                 
-                self.storeUrl(rel_url)
+                self.storeUrl(rel_url,dir)
             else:
                 #Skip
                 continue
@@ -70,21 +71,30 @@ class Crawler:
             return False
 
     
-    def storeUrl(self,url):
+    def storeUrl(self,url,dir):
         #check if url exists in database
-        
-        # c = Content()
-        # c.video_url = '/uploads/'+self.getName(url)
-        # c.name=self.getName(url)
-        # c.save()
+        name = self.clean_name(self.getName(url))
+        c = Content()
+        c.video_url = '/uploads/'+self.getName(url)
+        c.name = self.getName(url)
+        c.save()
 
    
-        print(self.clean_name(self.getName(url)))
+        print()
     def clean_name(self,name):
-        unwanted_chars=['[',']','.','-',' ']
-        name=name.rsplit(".",1)[0]
+        ext_name = ""
+        for y in ext:
+            if name.endswith(y):
+                name = name.replace(y, "")
+                ext_name = y
+                break
+
+        print(ext_name)
+        print(name)
         for x in unwanted_chars:
-            name.replace("","_")
+            name = name.replace(x, "_")
+
+        return name+ext_name
         
     def getName(self,url):
         u=url.split("/")
