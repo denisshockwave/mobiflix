@@ -1,0 +1,91 @@
+@import "src/Theme/base.scss";
+
+.app-bar {
+  background-color: map-get($colors, primary) !important;
+
+  &__toolbar {
+    display: flex!important;
+    align-items: center!important;
+
+    &-search {
+      position: absolute!important;
+      right: 0!important;
+      height: 36px;
+      width: 250px;
+      margin-right: 12px!important;
+      padding-left: 16px;
+      font-size: 18px;
+      font-weight: 100!important;
+      color: map-get($colors, text-primary);
+      background-color: map-get($colors, primary);
+      border: 1px solid map-get($colors, text-secondary);
+      border-radius: 28px;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::placeholder {
+        font-size: 18px;
+        font-weight: 100!important;
+        color: map-get($colors, text-secondary);
+      }
+    }
+
+    &-header {
+      margin-left: 48px!important;
+      font-weight: 300!important;
+      font-size: 24px!important;
+    }
+  }
+
+  &__drawer {
+    display: inline-block;
+    overflow-y: hidden;
+    min-width: 250px;
+
+    &-title {
+      margin-top: 12px;
+      margin-left: 12px;
+      font-weight: 200;
+      font-size: 18px;
+    }
+
+    &-item {
+      font-weight: 100!important;
+      font-size: 14px!important;
+      width: 150px;
+    }
+
+    &-buy {
+      position: absolute;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      height: 50px;
+      width: 240px;
+      margin-bottom: 24px;
+      font-weight: 200;
+      padding-left: 8px;
+      text-decoration: none;
+      color: map-get($colors, primary);
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+        cursor: pointer;
+      }
+
+      &:visited {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.MuiExpansionPanel-expanded-222 {
+  margin-top: 0px!important;
+}
+
+.MuiExpansionPanel-expanded-261 {
+  margin: 0px!important;
+}

@@ -1,0 +1,68 @@
+@import "src/Theme/base.scss";
+
+.movieplayer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100vh;
+  width: 100vw;
+  color: map-get($colors, text-primary)!important;
+  overflow-x: hidden;
+
+  &-voucher {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    &-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      &__buttons {
+        display: flex;
+        flex-direction: row;
+      }
+  
+      &__input {
+        height: 36px;
+        width: 350px;
+        margin: 8px!important;
+        padding: 16px;
+        font-size: 18px;
+        font-weight: 100!important;
+        color: map-get($colors, text-primary);
+        background-color: map-get($colors, primary);
+        border: 1px solid map-get($colors, secondary);
+        border-radius: 28px;
+
+        &:focus {
+          outline: none;
+        }
+      }
+  
+      &__submit {
+        display: inline-block;
+        height: 24px;
+        margin: 8px!important;
+        padding: 16px;
+        font-size: 18px;
+        font-weight: 100!important;
+        color: map-get($colors, text-primary);
+        background-color: map-get($colors, primary);
+        border: 1px solid map-get($colors, secondary);
+        border-radius: 28px;
+        text-align: center;
+        text-decoration: none;
+
+        &:hover {
+          background-color: map-get($colors, secondary);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@import "../../Theme/base.scss";
+
+.movie-list {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.movielist {
+  display: flex;
+  justify-content: center;
+  height: 95vh!important;
+  margin: 1px!important;
+  overflow-x: hidden!important;
+  overflow-x: auto!important;
+
+  &::-webkit-scrollbar { 
+    display: none; 
+  } 
+}
+
+.nomovies {
+  margin-top: 96px;
+  font-size: 24px;
+  font-weight: 100!important;
+  color: map-get($colors, text-secondary);
+}

@@ -1,0 +1,48 @@
+{
+  "name": "movies-app",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "https://paulkariukirimiru.github.io/mobiflix-front/",
+  "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
+    "@petejkim/react-scripts-ts-sass": "2.15.2",
+    "@types/material-ui": "^0.21.5",
+    "axios": "^0.18.0",
+    "gh-pages": "^2.0.1",
+    "js-file-download": "^0.4.8",
+    "react": "^16.8.0",
+    "react-alert": "^5.5.0",
+    "react-alert-template-basic": "^1.0.0",
+    "react-cookie": "^3.1.1",
+    "react-dom": "^16.8.0",
+    "react-router-dom": "^4.3.1",
+    "remote-redux-devtools": "^0.5.16",
+    "video-react": "^0.13.7"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^10.12.21",
+    "@types/react": "^16.8.2",
+    "@types/react-dom": "^16.8.0",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/redux": "^3.6.0",
+    "@types/redux-devtools-extension": "^2.13.2",
+    "@types/redux-thunk": "^2.1.0",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-persist": "^5.10.0",
+    "redux-thunk": "^2.3.0",
+    "typescript": "^3.3.1"
+  }
+}
