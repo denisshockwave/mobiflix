@@ -1,36 +1,6 @@
 version: '3'
 
 services:
-<<<<<<< HEAD
-  web:
-    restart: always
-    build: .
-    expose:
-      - 8000
-    volumes:
-     - .:/srv/app
-     - web-static: /srv/app/static
-     - web-edia: /srv/app/media
-    env_file: /home/shockwave/workspace3/venv/bin/activate
-    environment:
-     DEBUG: 'true'
-    command: /usr/local/bin/gunicorn mobflix.wsgi:application -w 2 -b :8000
-    container_name: mobiflix
-    volumes:
-     - .:/srv/app
-  # nginx:
-  #  restart: always
-  #  build: ./nginx/
-  #  expose:
-  #   - 80
-  #  volumes:
-  #   - web-static:/www/static
-  #  links:
-  #   - web:web
-    
-  # volumes:
-  #   web-django:
-=======
   backend:
     build:
       context: .
@@ -42,4 +12,3 @@ services:
     ports:
       - "8000:8000"
     container_name: mobiflix
->>>>>>> 366ff8cc690df36ea5467065a970c204e24afc45
