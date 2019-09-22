@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  web:
+    restart: always
+    build: .
+    expose:
+      - 8000
+    volumes:
+     - .:/srv/app
+     - web-static: /srv/app/static
+     - web-edia: /srv/app/media
+    env_file: /home/shockwave/workspace3/venv/bin/activate
+    environment:
+     DEBUG: 'true'
+    command: /usr/local/bin/gunicorn mobflix.wsgi:application -w 2 -b :8000
+    container_name: mobiflix
+    volumes:
+     - .:/srv/app
+  # nginx:
+  #  restart: always
+  #  build: ./nginx/
+  #  expose:
+  #   - 80
+  #  volumes:
+  #   - web-static:/www/static
+  #  links:
+  #   - web:web
+    
+  # volumes:
+  #   web-django:
