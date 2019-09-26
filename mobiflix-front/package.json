@@ -2,7 +2,7 @@
   "name": "movies-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://paulkariukirimiru.github.io/mobiflix-front/",
+  "homepage": "http://192.168.88.9/mobiflix/",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
