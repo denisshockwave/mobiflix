@@ -1,7 +1,7 @@
 import requests
 import datetime
 from .models import *
-API_URL="http://netpap.co.ke"
+API_URL="https://account.netpap.co.ke"
 class LocalPermissionClass:
     def checkIfWatcher(self,code):
 
@@ -48,8 +48,12 @@ class RemotePermissionClass:
 
         a=r.json()
         if "success" in a['status']:
-            LocalPermissionClass().storeLocal(code,a['message']['expire_date'],a['message']['count'])
+            LocalPermissionClass().storeLocal(code,a['message']['expire_date'],a['message']['paid_count'])
             print(a)
+            print ("successful")
             return a
         else:
+            print ("Not successful")
+            print(a)
+            print("remote")
             return a

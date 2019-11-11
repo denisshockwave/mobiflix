@@ -156,12 +156,8 @@ class VerifyVoucher(APIView):
         l=LocalPermissionClass()
         ex=l.checkIfWatcher(code)
         #exists
-        print(ex)
-        print("================")
         if ex: #watch code has been logged
-            print("checked bro")
             a=l.checkCount(ex)
-            print(a)
             if a:
                
                 message="Code has been verified.Enjoy"
@@ -183,11 +179,13 @@ class VerifyVoucher(APIView):
             #check remotely this is for new codes sana sana
             r=RemotePermissionClass()
             a=r.verify_code(code)
+            print(a)
+            print("verify code")
             if "success" in a['status']:
                 session['message']="Code has bee verified"
                 session['state']="success"
                 session['base_url'] = url
-                session['count']=a['paid_count']
+                session['count']=a['message']['paid_count']
                 session['expiry_date']=getExpiryTime(a['message']['expire_date'])
                 session['status'] = 'WATCH'
                 #####
