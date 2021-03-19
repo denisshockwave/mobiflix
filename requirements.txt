@@ -31,7 +31,7 @@ django-taggit==0.23.0
 django-treebeard==4.3
 django-twilio==0.9.0
 django-widget-tweaks==1.4.2
-djangorestframework==3.8.2
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 djangorestframework-simplejwt==3.3
 docker==3.5.1
