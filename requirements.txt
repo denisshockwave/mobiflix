@@ -61,7 +61,7 @@ pylint==2.1.1
 PySocks==1.6.8
 python-dateutil==2.7.3
 pytz==2018.4
-PyYAML==3.13
+PyYAML==5.4
 redis==2.10.6
 requests==2.20.1
 schema==0.6.8
