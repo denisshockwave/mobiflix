@@ -73,7 +73,7 @@ twilio==6.12.0
 typed-ast==1.1.0
 Unidecode==1.0.22
 uritemplate==3.0.0
-urllib3==1.24.1
+urllib3==1.26.5
 uWSGI==2.0.15
 vine==1.1.4
 wagtail==2.2.2
